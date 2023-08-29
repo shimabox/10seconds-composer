@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import styled from 'styled-components';
 import validationSchema from './validationSchema';
 import Player from './Player';
-import { CodeStructureType, FormValues } from '../types';
+import { FormValues } from '../types';
 import { MaxComposerNameLength } from '../constants/constraints';
-import { setCodeStructureToStorage } from '../storage';
-import caller from '../api/caller';
+import { AppDispatch, RootState } from '../store';
+import { fetchData } from '../modules/dataReducer';
+import { ApiResponseStatus } from '../enums';
 
 const FormStyle = styled.form`
   padding: 0 .5rem;
@@ -69,7 +71,15 @@ const GeneratingMessageWrapper = styled.div`
 `;
 
 const Form: React.FC = () => {
-  const [isSuccessGen, setSuccessGen] = useState(true);
+  const dispatch = useDispatch<AppDispatch>();
+  const status = useSelector((state: RootState) => state.data.status);
+
+  const isLoading = (status: ApiResponseStatus) => {
+    return status === ApiResponseStatus.Loading;
+  }
+  const isFailed = (status: ApiResponseStatus) => {
+    return status === ApiResponseStatus.Failed;
+  }
 
   const initialValues: FormValues = {
     name: 'ショパン'
@@ -83,16 +93,8 @@ const Form: React.FC = () => {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
-    onSubmit: async (values: FormValues, actions) => {
-      try {
-        const response: CodeStructureType = await caller(values);
-        setCodeStructureToStorage(response);
-        setSuccessGen(true);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        actions.setSubmitting(false);
-      }
+    onSubmit: async (values: FormValues) => {
+      dispatch(fetchData(values));
     },
   });
 
@@ -118,15 +120,15 @@ const Form: React.FC = () => {
           <ErrorMessageWrapper>{formik.errors.name}</ErrorMessageWrapper> : null
         }
         <ButtonWrapper>
-          <button type='submit' disabled={formik.isSubmitting}>Generate</button>
+          <button type='submit' disabled={isLoading(status)}>Generate</button>
           <Player />
         </ButtonWrapper>
-        {!isSuccessGen
-          ? <ErrorMessageWrapper>Failed to generate code.<br/>Please try again.</ErrorMessageWrapper>
+        {isLoading(status)
+          ? <GeneratingMessageWrapper><div>Generating...</div></GeneratingMessageWrapper>
           : null
         }
-        {formik.isSubmitting
-          ? <GeneratingMessageWrapper><div>Generating...</div></GeneratingMessageWrapper>
+        {isFailed(status)
+          ? <ErrorMessageWrapper>Failed to generate code.<br/>Please try again.</ErrorMessageWrapper>
           : null
         }
       </FormStyle>
