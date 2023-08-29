@@ -15,6 +15,7 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "styled-components": "^6.0.7",
+    "tone": "^14.7.77",
     "typescript": "^5.2.2",
     "web-vitals": "^2.1.0",
     "yup": "^1.2.0"
