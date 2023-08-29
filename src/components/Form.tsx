@@ -2,6 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import styled from 'styled-components';
 import validationSchema from './validationSchema';
+import Player from './Player';
 import { FormValues } from '../types';
 import { MaxComposerNameLength } from '../constants/constraints';
 
@@ -42,6 +43,11 @@ const ErrorMessageWrapper = styled.div`
 
 const ButtonWrapper = styled.div`
   margin-top: 4px;
+  display: flex;
+  column-gap: 1rem;
+  button {
+    width: 50%;
+  }
 `;
 
 const Form: React.FC = () => {
@@ -91,6 +97,7 @@ const Form: React.FC = () => {
         }
         <ButtonWrapper>
           <button type='submit' disabled={formik.isSubmitting}>Submit</button>
+          <Player />
         </ButtonWrapper>
       </FormStyle>
   );
