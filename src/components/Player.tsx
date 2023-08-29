@@ -25,13 +25,12 @@ const scheduleProgression = (codeStructure: CodeStructureType) => {
 
 const Player: React.FC = () => {
   const [buttonLabel, setButtonLabel] = useState('Play');
-  const data = useSelector((state: RootState) => state.data.items);
+  const codeStructure = useSelector((state: RootState) => state.data.codeStructure);
 
   const handleClick = async () => {
     if (Transport.state === 'stopped') {
       await start();
-      const codeStructure = data.length > 0 ? data : DefaultCodeStructure;
-      scheduleProgression(codeStructure);
+      scheduleProgression(codeStructure ? codeStructure : DefaultCodeStructure);
       Transport.start();
       setButtonLabel('Stop');
     } else if (Transport.state === 'started') {

@@ -1,21 +1,23 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { ChatCompletion } from 'openai/resources/chat';
 import caller from '../api/caller';
 import { CodeStructureType, FormValues } from '../types';
 import { ApiResponseStatus } from '../enums';
+import { Composer } from '../models/Composer';
 
 interface DataState {
-  items: CodeStructureType;
+  codeStructure: CodeStructureType | undefined;
   status: ApiResponseStatus;
   error: string;
 }
 
 const initialState: DataState = {
-  items: [],
+  codeStructure: undefined,
   status: ApiResponseStatus.Idle,
   error: ''
 };
 
-export const fetchData = createAsyncThunk<CodeStructureType, FormValues>(
+export const fetchData = createAsyncThunk<ChatCompletion, FormValues>(
   'data/fetchData',
   async (args, { rejectWithValue }) => {
     try {
@@ -35,8 +37,9 @@ const dataSlice = createSlice({
       .addCase(fetchData.pending, (state) => {
         state.status = ApiResponseStatus.Loading;
       })
-      .addCase(fetchData.fulfilled, (state, action: PayloadAction<CodeStructureType>) => {
-        state.items = action.payload;
+      .addCase(fetchData.fulfilled, (state, action: PayloadAction<ChatCompletion>) => {
+        const composer = new Composer(action.payload);
+        state.codeStructure = composer.getCodeStructure();
         state.status = ApiResponseStatus.Succeeded;
       })
       .addCase(fetchData.rejected, (state, action) => {
