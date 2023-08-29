@@ -52,6 +52,22 @@ const ButtonWrapper = styled.div`
   }
 `;
 
+// @see https://www.webcreatorbox.com/inspiration/marquee-text
+const GeneratingMessageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  font-size: small;
+  div {
+    width: 100%;
+    animation: marquee 5s linear infinite;
+  }
+  @keyframes marquee {
+    0%   { translate: calc(100%); }
+    100% { translate: calc(-100%); }
+  }
+`;
+
 const Form: React.FC = () => {
   const [isSuccessGen, setSuccessGen] = useState(true);
 
@@ -107,6 +123,10 @@ const Form: React.FC = () => {
         </ButtonWrapper>
         {!isSuccessGen
           ? <ErrorMessageWrapper>Failed to generate code.<br/>Please try again.</ErrorMessageWrapper>
+          : null
+        }
+        {formik.isSubmitting
+          ? <GeneratingMessageWrapper><div>Generating...</div></GeneratingMessageWrapper>
           : null
         }
       </FormStyle>
