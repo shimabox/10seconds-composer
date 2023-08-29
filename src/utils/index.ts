@@ -24,3 +24,7 @@ export function syntaxHighlight(json: string) {
     }
   );
 }
+
+export const sleep = (waitTime: number) => {
+  return new Promise(resolve => setTimeout(resolve, waitTime));
+};
