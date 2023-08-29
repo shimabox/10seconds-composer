@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { MaxSoundTimeInSeconds } from '../constants/constraints';
 
 const HeaderStyle = styled.header`
   color: gray;
@@ -17,7 +18,7 @@ const Header: React.FC = () => {
   return (
     <>
       <HeaderStyle>
-        <Title>10seconds Composer.</Title>
+        <Title>{MaxSoundTimeInSeconds}seconds Composer.</Title>
       </HeaderStyle>
     </>
   );
