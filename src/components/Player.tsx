@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PolySynth, Synth, Time, Transport, start } from 'tone';
 import { CodeStructureType } from '../types';
+import { getCodeStructureFromStorage } from '../storage';
 import { DefaultCodeStructure } from '../constants/codeStructure';
 import { MaxSoundTimeInSeconds } from '../constants/constraints';
 
@@ -27,7 +28,9 @@ const Player: React.FC = () => {
   const handleClick = async () => {
     if (Transport.state === 'stopped') {
       await start();
-      scheduleProgression(DefaultCodeStructure);
+      const storedCodeStructure = getCodeStructureFromStorage();
+      const codeStructure = storedCodeStructure ? JSON.parse(storedCodeStructure) : DefaultCodeStructure;
+      scheduleProgression(codeStructure);
       Transport.start();
       setButtonLabel('Stop');
     } else if (Transport.state === 'started') {

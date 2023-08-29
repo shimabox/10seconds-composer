@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import styled from 'styled-components';
 import validationSchema from './validationSchema';
 import Player from './Player';
-import { FormValues } from '../types';
+import { CodeStructureType, FormValues } from '../types';
 import { MaxComposerNameLength } from '../constants/constraints';
+import { setCodeStructureToStorage } from '../storage';
+import caller from '../api/caller';
 
 const FormStyle = styled.form`
   padding: 0 .5rem;
@@ -51,6 +53,8 @@ const ButtonWrapper = styled.div`
 `;
 
 const Form: React.FC = () => {
+  const [isSuccessGen, setSuccessGen] = useState(true);
+
   const initialValues: FormValues = {
     name: 'ショパン'
   };
@@ -65,7 +69,9 @@ const Form: React.FC = () => {
     validationSchema: validationSchema,
     onSubmit: async (values: FormValues, actions) => {
       try {
-        console.log(values);
+        const response: CodeStructureType = await caller(values);
+        setCodeStructureToStorage(response);
+        setSuccessGen(true);
       } catch (error) {
         console.error(error);
       } finally {
@@ -96,9 +102,13 @@ const Form: React.FC = () => {
           <ErrorMessageWrapper>{formik.errors.name}</ErrorMessageWrapper> : null
         }
         <ButtonWrapper>
-          <button type='submit' disabled={formik.isSubmitting}>Submit</button>
+          <button type='submit' disabled={formik.isSubmitting}>Generate</button>
           <Player />
         </ButtonWrapper>
+        {!isSuccessGen
+          ? <ErrorMessageWrapper>Failed to generate code.<br/>Please try again.</ErrorMessageWrapper>
+          : null
+        }
       </FormStyle>
   );
 };
