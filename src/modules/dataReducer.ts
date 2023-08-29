@@ -7,12 +7,14 @@ import { Composer } from '../models/Composer';
 
 interface DataState {
   codeStructure: CodeStructureType | undefined;
+  thoughtsWhenComposing: string;
   status: ApiResponseStatus;
   error: string;
 }
 
 const initialState: DataState = {
   codeStructure: undefined,
+  thoughtsWhenComposing: '',
   status: ApiResponseStatus.Idle,
   error: ''
 };
@@ -40,6 +42,7 @@ const dataSlice = createSlice({
       .addCase(fetchData.fulfilled, (state, action: PayloadAction<ChatCompletion>) => {
         const composer = new Composer(action.payload);
         state.codeStructure = composer.getCodeStructure();
+        state.thoughtsWhenComposing = composer.getThoughtsWhenComposing();
         state.status = ApiResponseStatus.Succeeded;
       })
       .addCase(fetchData.rejected, (state, action) => {
