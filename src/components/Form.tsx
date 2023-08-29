@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import styled from 'styled-components';
 import validationSchema from './validationSchema';
 import Player from './Player';
+import GeneratedResult from './GeneratedResult';
 import { FormValues } from '../types';
 import { MaxComposerNameLength } from '../constants/constraints';
 import { AppDispatch, RootState } from '../store';
@@ -72,18 +73,22 @@ const GeneratingMessageWrapper = styled.div`
 
 const Form: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const codeStructure = useSelector((state: RootState) => state.data.codeStructure);
+  const thoughtsWhenComposing = useSelector((state: RootState) => state.data.thoughtsWhenComposing);
   const status = useSelector((state: RootState) => state.data.status);
+  const initialValues: FormValues = {
+    name: 'ショパン'
+  };
 
+  const isSucceeded = (status: ApiResponseStatus) => {
+    return status === ApiResponseStatus.Succeeded;
+  }
   const isLoading = (status: ApiResponseStatus) => {
     return status === ApiResponseStatus.Loading;
   }
   const isFailed = (status: ApiResponseStatus) => {
     return status === ApiResponseStatus.Failed;
   }
-
-  const initialValues: FormValues = {
-    name: 'ショパン'
-  };
   const getInputLengthStyle = (inputLength: number) => {
     return inputLength > MaxComposerNameLength
             ? <IsOverLengthStyle>{inputLength}</IsOverLengthStyle>
@@ -123,6 +128,13 @@ const Form: React.FC = () => {
           <button type='submit' disabled={isLoading(status)}>Generate</button>
           <Player />
         </ButtonWrapper>
+        {isSucceeded(status)
+          ? <GeneratedResult
+              codeStructure={codeStructure}
+              thoughtsWhenComposing={thoughtsWhenComposing}
+            />
+          : null
+        }
         {isLoading(status)
           ? <GeneratingMessageWrapper><div>Generating...</div></GeneratingMessageWrapper>
           : null
