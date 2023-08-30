@@ -1,46 +1,79 @@
-# Getting Started with Create React App
+# 10seconds-composer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+10秒間の作曲家
 
-## Available Scripts
+## これは何？
 
-In the project directory, you can run:
+任意の作曲家名を入力すると、その作曲家をイメージした音(コード進行)をブラウザ上で鳴らすことができます。
 
-### `yarn start`
+## 仕組み
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- コード進行はOpenAIのAPIを使って生成させています
+  - コード進行はjson形式で出力させています
+  - 10秒程度の音が鳴るようにAIさんにしてもらっています
+- [Tone.js](https://tonejs.github.io/ "Tone.js") を利用して、ブラウザ上で音を鳴らしています
+- openAIのAPIで生成したjsonをパラメータとして、`Tone.js`に渡しています
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Demo
 
-### `yarn test`
+https://github.com/shimabox/10seconds-composer/assets/2285196/86b6769f-1694-4df5-b8c8-5b934174c67a
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## :warning::warning: 注意(免責) :warning::warning:
 
-### `yarn build`
+お遊びアプリなのでクライアントサイドでOpenAIのAPIを実行する実装になっています。  
+(この実装のまま公開するとOpenAIの`API keys`:key:が漏れてしまいます)  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+お試しされる際は、あくまでも個人、ローカルで楽しむようにしてください。  
+なにかあっても筆者は責任が取れません。
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 初期設定
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 環境
 
-### `yarn eject`
+```sh
+$ node -v
+v18.16.0
+$ yarn -v
+1.22.19
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 事前準備
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+OpenAIのAPIキーを発行してください。
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### clone
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+$ git clone https://github.com/shimabox/10seconds-composer.git
+$ cd 10seconds-composer
+```
 
-## Learn More
+### envの設定
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+$ cp .env.example .env
+$ vi .env
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+`REACT_APP_OPENAI_API_KEY` に、事前準備で取得したOpenAIのAPIキーを入れてください。  
+`REACT_APP_OPENAI_MODEL` は任意で修正してください。
+
+```
+REACT_APP_OPENAI_MODEL='gpt-4-0314'
+REACT_APP_OPENAI_API_KEY='xxxxx'
+```
+
+### yarn install
+
+```
+$ yarn install
+```
+
+## 実行
+
+```
+$ yarn start
+```
+
+こちらのコマンドで http://localhost:3000 が立ち上がります。  
+※ デフォルトのportは`3000`
