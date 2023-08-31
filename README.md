@@ -16,7 +16,8 @@
 
 ## Demo
 
-https://github.com/shimabox/10seconds-composer/assets/2285196/86b6769f-1694-4df5-b8c8-5b934174c67a
+<div><video controls src="https://github.com/shimabox/10seconds-composer/assets/2285196/7375c542-714f-4486-8b49-4d6fd3aa4485
+" muted="false"></video></div>
 
 ## :warning::warning: 注意(免責) :warning::warning:
 
