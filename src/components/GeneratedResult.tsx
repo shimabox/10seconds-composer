@@ -4,12 +4,16 @@ import { CodeStructureType } from '../types';
 import { syntaxHighlight } from '../utils';
 
 const ResultDetails = styled.details`
-  margin-top: 4px;
-  font-size: x-small;
+  margin-top: 1rem;
+  font-size: 1.2rem;
 `;
 
 const ThoughtWrapper = styled.p`
-  margin: 4px 0;
+  margin: 1rem 0;
+  font-size: 1rem;
+  background: rgba(200, 200, 200, 0.2);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
 `;
 
 const CodeStructureWrapper = styled.pre`
@@ -18,6 +22,7 @@ const CodeStructureWrapper = styled.pre`
   outline: 1px solid #ccc;
   padding: 5px;
   margin: 0 0 0.5rem 0;
+  font-size: 1rem;
 `;
 
 // @see https://dev.to/gauravadhikari1997/show-json-as-pretty-print-with-syntax-highlighting-3jpm

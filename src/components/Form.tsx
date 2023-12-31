@@ -21,18 +21,24 @@ const InputWrapper = styled.div`
 `;
 
 const InputStyle = styled.input`
-  width: 60%;
+  width: 100%;
+  height: 2rem;
+  font-size: 1rem;
   &::placeholder {
-    font-size: 8px;
+    font-size: 1rem;
   }
 `;
 
 const CounterStyle = styled.div`
   display: flex;
   align-items: flex-end;
-  font-size: 8px;
+  font-size: 1rem;
+  margin-left: .5rem;
   span {
-    padding-right: 2px;
+    margin-right: 4px;
+  }
+  span:last-child {
+    margin-right: 0;
   }
 `;
 
@@ -41,17 +47,19 @@ const IsOverLengthStyle = styled.span`
 `;
 
 const ErrorMessageWrapper = styled.div`
-  font-size: small;
+  font-size: 1rem;
   color: red;
-  margin-top: 4px;
+  margin-top: .5rem;
 `;
 
 const ButtonWrapper = styled.div`
-  margin-top: 4px;
   display: flex;
   column-gap: 1rem;
+  margin-top: .5rem;
   button {
     width: 50%;
+    height: 2rem;
+    font-size: 1rem;
   }
 `;
 
@@ -60,7 +68,8 @@ const GeneratingMessageWrapper = styled.div`
   display: flex;
   justify-content: center;
   overflow: hidden;
-  font-size: small;
+  font-size: 1.2rem;
+  margin: .5rem 0;
   div {
     width: 100%;
     animation: marquee 5s linear infinite;
