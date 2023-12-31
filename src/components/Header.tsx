@@ -9,8 +9,8 @@ const HeaderStyle = styled.header`
 
 const Title = styled.h1`
   margin: 0;
-  padding: 0.5rem 0;
-  font-size: medium;
+  padding: 1rem 0;
+  font-size: 2rem;
   text-align: center;
 `;
 
