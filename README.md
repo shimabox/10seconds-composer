@@ -60,7 +60,7 @@ $ vi .env
 
 `REACT_APP_OPENAI_API_KEY` に、事前準備で取得したOpenAIのAPIキーを入れてください。  
 `REACT_APP_OPENAI_MODEL` は任意で修正してください。  
-※ デフォルトで [gpt-4-1106-preview(GPT-4 Turbo)](https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo "Models - OpenAI API") を指定しています
+※ デフォルトで [gpt-4-turbo](https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo "Models - OpenAI API") を指定しています
 
 ```
 REACT_APP_OPENAI_MODEL='gpt-4-1106-preview'
