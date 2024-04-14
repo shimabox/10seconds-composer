@@ -35,8 +35,10 @@
 $ node -v
 v18.16.0
 $ yarn -v
-1.22.19
+4.1.1
 ```
+
+※ [Volta](https://docs.volta.sh/guide/ "Introduction | Volta")を入れておくと楽です
 
 ### 事前準備
 
