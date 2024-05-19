@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { ChatCompletion } from 'openai/resources/chat';
 import caller from '../api/caller';
+// import caller from '../api/stubCaller'; // If you want to use a stub, please import stubCaller instead of caller.
 import { CodeStructureType, FormValues } from '../types';
 import { ApiResponseStatus } from '../enums';
 import { Composer } from '../models/Composer';
