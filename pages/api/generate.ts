@@ -14,14 +14,14 @@ export default async function handler(
   }
 
   try {
-    const { name, model } = req.body;
+    const { name } = req.body;
 
     if (!name) {
       return res.status(400).json({ error: 'Composer name is required' });
     }
 
     const completion = await openai.chat.completions.create({
-      model: model || process.env.OPENAI_MODEL || 'gpt-4o',
+      model: process.env.OPENAI_MODEL || 'gpt-4o',
       messages: [
         { role: 'system', content: req.body.systemPrompt },
         { role: 'user', content: name }

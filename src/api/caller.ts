@@ -10,7 +10,6 @@ const caller = async (data: FormValues) => {
     body: JSON.stringify({
       name: data.name,
       systemPrompt: Prompt,
-      model: process.env.REACT_APP_OPENAI_MODEL,
     }),
   });
 
