@@ -9,6 +9,7 @@
 ## 仕組み
 
 - コード進行はOpenAIのAPIを使って生成させています
+  - Next.js API Routeを経由してサーバーサイドでOpenAI APIを呼び出し
   - コード進行はjson形式で出力させています
   - 10秒程度の音が鳴るようにAIさんにしてもらっています
 - [Tone.js](https://tonejs.github.io/ "Tone.js") を利用して、ブラウザ上で音を鳴らしています
@@ -21,10 +22,8 @@
 
 ## :warning::warning: 注意(免責) :warning::warning:
 
-お遊びアプリなのでクライアントサイドでOpenAIのAPIを実行する実装になっています。  
-(この実装のまま公開するとOpenAIの`API keys`:key:が漏れてしまいます)  
+Next.js API Routeを経由してサーバーサイドでOpenAI APIを呼び出すため、APIキーはブラウザに露出しませんが、エンドポイント（`/api/generate`）は誰でもアクセス可能なため、あくまでも個人、ローカルで楽しむようにしてください。
 
-お試しされる際は、あくまでも個人、ローカルで楽しむようにしてください。  
 なにかあっても筆者は責任が取れません。
 
 ## 初期設定
@@ -33,12 +32,13 @@
 
 ```sh
 $ node -v
-v18.16.0
+v20.18.0
 $ yarn -v
 4.1.1
 ```
 
 ※ [Volta](https://docs.volta.sh/guide/ "Introduction | Volta")を入れておくと楽です
+※ Next.js 15を使用するため、Node.js 20.0.0以上が必要です
 
 ### 事前準備
 
@@ -58,13 +58,13 @@ $ cp .env.example .env
 $ vi .env
 ```
 
-`REACT_APP_OPENAI_API_KEY` に、事前準備で取得したOpenAIのAPIキーを入れてください。  
-`REACT_APP_OPENAI_MODEL` は任意で修正してください。  
+`OPENAI_API_KEY` に、事前準備で取得したOpenAIのAPIキーを入れてください。
+`OPENAI_MODEL` は任意で修正してください。
 ※ デフォルトで [gpt-4o](https://platform.openai.com/docs/models/gpt-4o "Models - OpenAI API") を指定しています
 
 ```
-REACT_APP_OPENAI_MODEL='gpt-4o'
-REACT_APP_OPENAI_API_KEY='xxxxx'
+OPENAI_API_KEY='xxxxx'
+OPENAI_MODEL='gpt-4o'
 ```
 
 ### yarn install
@@ -75,9 +75,17 @@ $ yarn install
 
 ## 実行
 
+### 開発モード
+
 ```
-$ yarn start
+$ yarn dev
 ```
 
-こちらのコマンドで http://localhost:3000 が立ち上がります。  
-※ デフォルトのportは`3000`
+こちらのコマンドで http://localhost:3000 が立ち上がります。
+
+### プロダクションビルド
+
+```
+$ yarn build
+$ yarn start
+```

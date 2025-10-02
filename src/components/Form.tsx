@@ -2,14 +2,16 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import styled from 'styled-components';
+import dynamic from 'next/dynamic';
 import validationSchema from './validationSchema';
-import Player from './Player';
 import GeneratedResult from './GeneratedResult';
 import { FormValues } from '../types';
 import { MaxComposerNameLength } from '../constants/constraints';
 import { AppDispatch, RootState } from '../store';
 import { fetchData } from '../modules/dataReducer';
 import { ApiResponseStatus } from '../enums';
+
+const Player = dynamic(() => import('./Player'), { ssr: false });
 
 const FormStyle = styled.form`
   padding: 0 .5rem;
