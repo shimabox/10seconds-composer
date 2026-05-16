@@ -2701,12 +2701,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brace-expansion@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "brace-expansion@npm:2.0.1"
+"brace-expansion@npm:^2.0.2":
+  version: 2.1.0
+  resolution: "brace-expansion@npm:2.1.0"
   dependencies:
-    balanced-match: "npm:^1.0.0"
-  checksum: b358f2fe060e2d7a87aa015979ecea07f3c37d4018f8d6deb5bd4c229ad3a0384fe6029bb76cd8be63c81e516ee52d1a0673edbe2023d53a5191732ae3c3e49f
+    balanced-match: ^1.0.0
+  checksum: 8/c77a7a64aabf94b8d5913955adb4f36957917565374461355bb4276830c027a313d981f32410cea9e38f52573e7eb776d02fe05091c3a79a061958d97e4d2b43
   languageName: node
   linkType: hard
 
@@ -4238,11 +4238,11 @@ __metadata:
   linkType: hard
 
 "minimatch@npm:^9.0.1":
-  version: 9.0.4
-  resolution: "minimatch@npm:9.0.4"
+  version: 9.0.9
+  resolution: "minimatch@npm:9.0.9"
   dependencies:
-    brace-expansion: "npm:^2.0.1"
-  checksum: 2c16f21f50e64922864e560ff97c587d15fd491f65d92a677a344e970fe62aafdbeafe648965fa96d33c061b4d0eabfe0213466203dd793367e7f28658cf6414
+    brace-expansion: ^2.0.2
+  checksum: 8/5292681ba1e14544ca9214ba5e412bb346214fb783354b22752f2d1e5c176e4a2c0bfcafeb1046389b816009ab73ba5410b176ce605632e8aa695db25f87f6b9
   languageName: node
   linkType: hard
 
