@@ -309,4 +309,5 @@ for (const alert of originalAlerts) {
   assert.ok(!locked.some(version => vulnerable(version, alert.range)), 'Vulnerable dependency remains for alert #' + alert.number);
   console.log('#' + alert.number + ' ' + alert.package + ': ' + (locked.join(', ') || 'removed'));
 }
-console.log('Original 56 advisory ranges verified. This check does not replace the full audit report.');
+assert.ok(!versions.braces, 'braces dependency reintroduced for alert #122');
+console.log('Original 56 advisory ranges verified; braces #122 removed. Full audit runs separately.');
