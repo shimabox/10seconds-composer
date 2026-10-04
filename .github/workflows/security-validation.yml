@@ -34,7 +34,7 @@ jobs:
         run: npx --yes --package @yarnpkg/cli-dist@4.1.1 yarn build
       - name: Native image and unauthenticated UI smoke
         run: npx --yes --package @yarnpkg/cli-dist@4.1.1 yarn node .github/scripts/smoke.cjs
-      - name: Full dependency audit report (not a clean-audit gate)
+      - name: Full dependency audit (fail on security findings)
         if: always()
         shell: bash
         run: |
@@ -43,19 +43,19 @@ jobs:
           audit_status=$?
           set -e
           cat audit.jsonl
-          node -e 'const fs = require("node:fs"); const raw = fs.readFileSync("audit.jsonl", "utf8").trim(); const rows = raw ? raw.split("\n").map(JSON.parse) : []; if (rows.some(row => !row.children)) throw new Error("Unexpected audit response"); console.log("Reported findings:", rows.length);'
+          node .github/scripts/check-audit.cjs audit.jsonl
           {
             echo '## Full dependency audit'
             echo "Audit command exit code: $audit_status"
-            echo 'This step reports the complete audit; it does not certify a clean dependency tree.'
-            echo 'Known remaining advisory: GHSA-vfj7-8cjw-p6xm, braces <=3.0.3. No patched release is available; Jest type dependencies still depend on it.'
+            echo 'Security findings fail this job; deprecation notices remain visible below.'
+            echo 'Unused Jest/Testing Library dependencies were removed to eliminate the braces path.'
             echo 'Existing Babel deprecation and missing ESLint warnings are not waived or hidden.'
             echo '```json'
             cat audit.jsonl
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           if [ "$audit_status" -eq 1 ]; then
-            echo '::warning::Dependency audit returned 1; vulnerabilities/deprecations remain. Review the full audit artifact and summary.'
+            echo '::warning::Dependency audit returned deprecation notices; security findings are checked separately and fail the job.'
           elif [ "$audit_status" -ne 0 ]; then
             exit "$audit_status"
           fi
